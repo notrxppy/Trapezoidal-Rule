@@ -1,0 +1,56 @@
+                                                                //Trapezoidal-Rule
+
+#include <stdio.h>
+
+// Define the function f(x) = 1 / (1 + x^2)
+double f(double x) {
+    return 1 / (1 + x * x);
+}
+
+int main() {
+    // Given limits
+    double a = 0.0, b = 1.0;
+    int n = 2; // number of subintervals
+
+    // Step size
+    double h = (b - a) / n;
+
+    // Compute x values
+    double x[3]; // array to store x values for 2 subintervals + 1 for the endpoint
+    for (int i = 0; i <= n; i++) {
+        x[i] = a + i * h;
+    }
+
+    // Compute f(x) values
+    double f_values[3];
+    for (int i = 0; i <= n; i++) {
+        f_values[i] = f(x[i]);
+    }
+
+    // Display table header
+    printf("-----------------------------------\n");
+    printf("i  | x(i)    | f(x(i)) = 1/(1+x^2)\n");
+    printf("-----------------------------------\n");
+
+    // Display table values
+    for (int i = 0; i <= n; i++) {
+        printf("%-3d | %-8.4f | %-8.4f\n", i, x[i], f_values[i]);
+    }
+    printf("-----------------------------------\n");
+
+    // Apply Trapezoidal Rule
+    double I = (h / 2) * (f_values[0] + 2 * (f_values[1]) + f_values[2]);
+
+    // Step-by-step explanation
+    printf("h = (b - a) / n = (%.1f - %.1f) / %d = %.4f\n", b, a, n, h);
+    printf("\nUsing Trapezoidal Rule:\n");
+    printf("I = (h / 2) * [f(x0) + 2*f(x1) + f(x2)]\n");
+    printf("I = (%.4f) * [%.4f + 2*%.4f + %.4f]\n", h / 2, f_values[0], f_values[1], f_values[2]);
+
+    // Final result
+    printf("\n-----------------------------------\n");
+    printf("Approximate value of the integral I = %.4f\n", I);
+    printf("-----------------------------------\n");
+
+    return 0;
+}
